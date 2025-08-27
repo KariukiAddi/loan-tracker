@@ -1,6 +1,6 @@
-# Loan Tracking System - Windows 11 Pro
+# Loan Management System
 
-A comprehensive loan management system built with **Laravel (PHP)** backend and **Next.js** frontend, optimized for Windows 11 Pro development environment.
+A modern loan management system built with **Laravel (PHP)** backend and **Next.js** frontend. Manage loans, track payments, and monitor repayment status with an intuitive interface.
 
 ## 🚀 Features
 
@@ -14,6 +14,7 @@ A comprehensive loan management system built with **Laravel (PHP)** backend and 
 
 ## 🛠️ Quick Setup
 #### Backend Setup
+```bash
 cd backend
 
 # Install dependencies
@@ -24,9 +25,12 @@ copy .env.example .env
 php artisan key:generate
 
 # Configure database in .env file
-# DB_DATABASE=loan_tracking
-# DB_USERNAME=root
-# DB_PASSWORD=your_password
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=loan_tracking
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
 # Run migrations and seed data
 php artisan migrate
@@ -34,9 +38,11 @@ php artisan db:seed
 
 # Start server
 php artisan serve
+```
 
 
 #### Frontend Setup
+```bash
 cd frontend
 
 # Install dependencies
@@ -47,6 +53,7 @@ copy .env.local.example .env.local
 
 # Start development server
 npm run dev
+```
 
 
 ## 🔧 Configuration
@@ -133,13 +140,6 @@ Where:
 
 ### Common Issues:
 
-**Port already in use:**
-\`\`\`bash
-# Kill process on port 8000
-netstat -ano | findstr :8000
-taskkill /PID <process_id> /F
-\`\`\`
-
 **Database connection error:**
 - Ensure MySQL/MariaDB is running
 - Check database credentials in `.env`
@@ -155,29 +155,60 @@ taskkill /PID <process_id> /F
 
 ## 📁 Project Structure
 
-\`\`\`
-loan-tracking-system/
+```
+loan-system/
 ├── backend/                 # Laravel API
 │   ├── app/
-│   │   ├── Http/Controllers/
-│   │   └── Models/
+│   │   ├── Http/
+│   │   │   ├── Controllers/
+│   │   │   └── Middleware/
+│   │   ├── Models/
+│   │   │   ├── Loan.php
+│   │   │   └── Payment.php
+│   │   └── Providers/
 │   ├── database/
 │   │   ├── migrations/
+│   │   │   ├── create_loans_table.php
+│   │   │   └── create_payments_table.php
 │   │   └── seeders/
-│   └── routes/
-├── frontend/                # Next.js App
+│   ├── routes/
+│   │   ├── api.php
+│   │   └── web.php
+│   ├── composer.json
+│   └── .env.example
+├── frontend/               # Next.js App
 │   ├── app/
+│   │   ├── dashboard/
+│   │   ├── loans/
+│   │   │   ├── [id]/
+│   │   │   └── create/
+│   │   └── repayments/
 │   ├── components/
-│   └── hooks/
-├── setup-windows.bat        # Automated setup
-├── start-all.bat           # Start both services
+│   │   ├── layout/
+│   │   │   ├── header.tsx
+│   │   │   └── footer.tsx
+│   │   └── ui/
+│   ├── lib/
+│   │   ├── api.ts
+│   │   └── utils.ts
+│   ├── hooks/
+│   ├── package.json
+│   └── .env.local.example
 └── README.md
 \`\`\`
+
+**Database connection error:**
+- Ensure MySQL/MariaDB is running
+- Check database credentials in `.env`
+- Verify database exists
+
+**Composer/NPM errors:**
+- Clear caches: `composer clear-cache`, `npm cache clean --force`
+- Delete vendor/node_modules and reinstall
 
 ## 🔐 Security Features
 
 - Input validation on both frontend and backend
-- CORS protection
 - SQL injection prevention via Eloquent ORM
 - XSS protection with proper data sanitization
 - Environment variable protection
@@ -187,8 +218,6 @@ loan-tracking-system/
 - [ ] User authentication and authorization
 - [ ] Email notifications for overdue payments
 - [ ] Advanced reporting and analytics
-- [ ] Payment gateway integration (Stripe/PayPal)
-- [ ] Multi-currency support
 - [ ] Export functionality (PDF/Excel)
 
 
